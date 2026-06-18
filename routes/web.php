@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// Convenience redirects so common URLs don't 404 -------------------------
+// The real dashboard lives at "/". These just forward there.
+Route::redirect('/home', '/');
+Route::redirect('/dashboard', '/');
+
 // Guest (unauthenticated) routes ------------------------------------------
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
