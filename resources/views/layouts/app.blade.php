@@ -305,6 +305,92 @@
         .modal.fade .modal-dialog { transform: scale(.92) translateY(10px); transition: transform .25s ease; }
         .modal.show .modal-dialog { transform: scale(1) translateY(0); }
 
+        /* --- Password strength meter (register) --- */
+        .strength-bar {
+            height: 6px;
+            border-radius: 4px;
+            background: #e3e6e4;
+            overflow: hidden;
+        }
+        .strength-bar span {
+            display: block;
+            height: 100%;
+            width: 0;
+            border-radius: 4px;
+            transition: width .35s ease, background-color .35s ease;
+        }
+        .strength-label, .match-hint {
+            font-size: .8rem;
+            display: inline-block;
+            margin-top: .25rem;
+            transition: color .25s ease;
+        }
+
+        /* --- Valid input check (green) --- */
+        .form-control.is-valid {
+            border-color: var(--magerwa-green);
+            background-image: none;
+        }
+
+        /* --- Staggered table-row entrance --- */
+        @keyframes rowIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+        .table tbody tr { animation: rowIn .4s ease both; }
+        .table tbody tr:nth-child(1) { animation-delay: .03s; }
+        .table tbody tr:nth-child(2) { animation-delay: .06s; }
+        .table tbody tr:nth-child(3) { animation-delay: .09s; }
+        .table tbody tr:nth-child(4) { animation-delay: .12s; }
+        .table tbody tr:nth-child(5) { animation-delay: .15s; }
+        .table tbody tr:nth-child(6) { animation-delay: .18s; }
+        .table tbody tr:nth-child(7) { animation-delay: .21s; }
+        .table tbody tr:nth-child(8) { animation-delay: .24s; }
+        .table tbody tr:nth-child(n+9) { animation-delay: .27s; }
+
+        /* --- Card header accent bar --- */
+        .card-header {
+            position: relative;
+            border-bottom: 1px solid #eceeed;
+        }
+        .card-header::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -1px;
+            width: 48px; height: 3px;
+            background: var(--magerwa-green);
+            border-radius: 0 3px 0 0;
+            transition: width .3s ease;
+        }
+        .card:hover > .card-header::after { width: 100%; }
+
+        /* --- Plate-number badge shimmer --- */
+        .badge.bg-brand {
+            position: relative;
+            overflow: hidden;
+            letter-spacing: .5px;
+        }
+        .badge.bg-brand::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+            transform: skewX(-20deg);
+        }
+        tr:hover .badge.bg-brand::before { animation: shimmer .8s ease; }
+        @keyframes shimmer { to { left: 140%; } }
+
+        /* --- Section headings: icon nudge on hover --- */
+        h3 .fa-fw, h3 i { transition: transform .25s ease; }
+        h3:hover > i { transform: translateY(-2px) scale(1.1); }
+
+        /* --- Empty-state icon float --- */
+        .fa-inbox { animation: floaty 3s ease-in-out infinite; }
+
+        /* --- Description-list rows (show pages) --- */
+        dl.row dt, dl.row dd { padding-block: .45rem; }
+        dl.row dt { border-top: 1px solid #f0f2f1; }
+        dl.row dd { border-top: 1px solid #f0f2f1; }
+        dl.row dt:first-of-type, dl.row dd:first-of-type { border-top: 0; }
+
         /* Respect reduced-motion preference */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -427,6 +513,28 @@
             btn.appendChild(circle);
             setTimeout(() => circle.remove(), 600);
         });
+
+        // Show a spinner on the submit button of any standard (non-AJAX) form.
+        // AJAX forms (login/register) handle their own loading state, so skip them.
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            if (form.id === 'loginForm' || form.id === 'registerForm') return;
+            if (form.matches('[data-no-spinner]')) return;
+            const btn = form.querySelector('button[type="submit"]');
+            if (!btn || btn.disabled) return;
+            // Preserve width so the layout doesn't jump, then swap to a spinner.
+            btn.style.minWidth = btn.offsetWidth + 'px';
+            btn.dataset.originalHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Please wait…';
+            btn.disabled = true;
+            // Re-enable on bfcache restore (e.g. user hits Back).
+            window.addEventListener('pageshow', function () {
+                if (btn.dataset.originalHtml) {
+                    btn.innerHTML = btn.dataset.originalHtml;
+                    btn.disabled = false;
+                }
+            });
+        }, true);
 
         // Animated count-up for elements with [data-count]
         (function () {
