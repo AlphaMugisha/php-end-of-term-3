@@ -3,15 +3,18 @@
 @section('title', 'Edit Vehicle')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h3 class="fw-bold mb-0"><i class="fas fa-pen text-brand me-1"></i> Edit Vehicle</h3>
-    <a href="{{ route('vehicles.index') }}" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
+<div class="page-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div>
+        <div class="breadcrumb-mini"><a href="{{ route('vehicles.index') }}">Vehicles</a> <i class="fas fa-chevron-right" style="font-size:.6rem"></i> Edit</div>
+        <h3>Edit Vehicle</h3>
+        <p class="sub mb-0">Update {{ $vehicle->model_name }} details</p>
+    </div>
+    <a href="{{ route('vehicles.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back</a>
 </div>
 
-<div class="card">
+<div class="card" style="max-width:840px">
     <div class="card-body p-4">
+        <div class="form-section-title"><i class="fas fa-car-side text-brand"></i> Vehicle Details</div>
         <form action="{{ route('vehicles.update', $vehicle) }}" method="POST" novalidate>
             @csrf
             @method('PUT')

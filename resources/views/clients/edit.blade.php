@@ -3,15 +3,18 @@
 @section('title', 'Edit Client')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h3 class="fw-bold mb-0"><i class="fas fa-pen text-brand me-1"></i> Edit Client</h3>
-    <a href="{{ route('clients.index') }}" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
+<div class="page-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div>
+        <div class="breadcrumb-mini"><a href="{{ route('clients.index') }}">Clients</a> <i class="fas fa-chevron-right" style="font-size:.6rem"></i> Edit</div>
+        <h3>Edit Client</h3>
+        <p class="sub mb-0">Update {{ $client->name }}'s details</p>
+    </div>
+    <a href="{{ route('clients.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back</a>
 </div>
 
-<div class="card">
+<div class="card" style="max-width:780px">
     <div class="card-body p-4">
+        <div class="form-section-title"><i class="fas fa-user text-brand"></i> Client Information</div>
         <form action="{{ route('clients.update', $client) }}" method="POST" novalidate>
             @csrf
             @method('PUT')

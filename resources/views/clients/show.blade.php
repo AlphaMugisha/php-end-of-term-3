@@ -3,15 +3,18 @@
 @section('title', 'Client Details')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h3 class="fw-bold mb-0"><i class="fas fa-user text-brand me-1"></i> Client Details</h3>
+<div class="page-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="cell-avatar" style="width:52px;height:52px;border-radius:14px;font-size:1.2rem">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+        <div>
+            <div class="breadcrumb-mini"><a href="{{ route('clients.index') }}">Clients</a> <i class="fas fa-chevron-right" style="font-size:.6rem"></i> Details</div>
+            <h3 class="mb-0">{{ $client->name }}</h3>
+            <p class="sub mb-0">Client #{{ $client->id }} · {{ $client->linkages->count() }} linked {{ Str::plural('vehicle', $client->linkages->count()) }}</p>
+        </div>
+    </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
-            <i class="fas fa-pen"></i> Edit
-        </a>
-        <a href="{{ route('clients.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
+        <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning"><i class="fas fa-pen me-1"></i> Edit</a>
+        <a href="{{ route('clients.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back</a>
     </div>
 </div>
 

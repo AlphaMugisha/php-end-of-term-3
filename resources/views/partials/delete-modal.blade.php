@@ -2,15 +2,18 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">
-                    <i class="fas fa-triangle-exclamation text-danger me-1"></i> Confirm Deletion
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete <strong id="deleteItemName">this record</strong>?
-                This action cannot be undone.
+            <div class="modal-body pt-0">
+                <div class="d-flex gap-3">
+                    <span class="modal-icon" style="background:#fdecec;color:#e5484d"><i class="fas fa-trash-can"></i></span>
+                    <div>
+                        <h5 class="modal-title mb-1" id="deleteModalLabel">Delete this record?</h5>
+                        You're about to delete <strong class="text-dark" id="deleteItemName">this record</strong>.
+                        This action cannot be undone.
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

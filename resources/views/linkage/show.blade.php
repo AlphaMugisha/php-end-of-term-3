@@ -3,17 +3,22 @@
 @section('title', 'Linkage Details')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-    <h3 class="fw-bold mb-0"><i class="fas fa-link text-brand me-1"></i> Linkage Details</h3>
-    <a href="{{ route('linkages.index') }}" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
+<div class="page-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div>
+        <div class="breadcrumb-mini"><a href="{{ route('linkages.index') }}">Linkage</a> <i class="fas fa-chevron-right" style="font-size:.6rem"></i> Details</div>
+        <h3>Linkage Details</h3>
+        <p class="sub mb-0">Connection between a client and a vehicle</p>
+    </div>
+    <a href="{{ route('linkages.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back</a>
 </div>
 
-<div class="text-center mb-4">
-    <span class="badge bg-brand fs-4 px-4 py-2">{{ $linkage->plate_number }}</span>
-    <div class="text-muted small mt-2">
-        Linked on {{ \Illuminate\Support\Carbon::parse($linkage->linked_at)->format('d M Y, H:i') }}
+<div class="card mb-4 hoverable">
+    <div class="card-body text-center py-4">
+        <div class="text-muted mb-2" style="font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Issued Plate Number</div>
+        <span class="badge bg-brand badge-plate" style="font-size:1.6rem;padding:.5rem 1.4rem">{{ $linkage->plate_number }}</span>
+        <div class="text-muted small mt-3">
+            <i class="fas fa-calendar-day me-1"></i> Linked on {{ \Illuminate\Support\Carbon::parse($linkage->linked_at)->format('d M Y, H:i') }}
+        </div>
     </div>
 </div>
 
