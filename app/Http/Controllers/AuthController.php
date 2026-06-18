@@ -74,6 +74,15 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
+        $request->session()->flash('success', 'Welcome back, ' . Auth::user()->name . '!');
+
+        // AJAX / fetch request — return the redirect target as JSON.
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message'  => 'Logged in successfully.',
+                'redirect' => route('dashboard'),
+            ], 200);
+        }
 
         return redirect()->intended(route('dashboard'))->with('success', 'Logged in successfully.');
     }
