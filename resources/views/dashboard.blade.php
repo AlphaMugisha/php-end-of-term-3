@@ -17,7 +17,7 @@
                 <div class="icon-box me-3"><i class="fas fa-user-shield"></i></div>
                 <div>
                     <div class="text-muted small text-uppercase">Total Admins</div>
-                    <div class="h3 fw-bold mb-0">{{ number_format($totalAdmins) }}</div>
+                    <div class="h3 fw-bold mb-0 stat-number" data-count="{{ $totalAdmins }}">0</div>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="icon-box me-3"><i class="fas fa-users"></i></div>
                 <div>
                     <div class="text-muted small text-uppercase">Total Clients</div>
-                    <div class="h3 fw-bold mb-0">{{ number_format($totalClients) }}</div>
+                    <div class="h3 fw-bold mb-0 stat-number" data-count="{{ $totalClients }}">0</div>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 <div class="icon-box me-3"><i class="fas fa-car"></i></div>
                 <div>
                     <div class="text-muted small text-uppercase">Total Vehicles</div>
-                    <div class="h3 fw-bold mb-0">{{ number_format($totalVehicles) }}</div>
+                    <div class="h3 fw-bold mb-0 stat-number" data-count="{{ $totalVehicles }}">0</div>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <div class="icon-box me-3"><i class="fas fa-link"></i></div>
                 <div>
                     <div class="text-muted small text-uppercase">Total Linkages</div>
-                    <div class="h3 fw-bold mb-0">{{ number_format($totalLinkages) }}</div>
+                    <div class="h3 fw-bold mb-0 stat-number" data-count="{{ $totalLinkages }}">0</div>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
 
 <div class="row g-3 mt-1">
     <div class="col-12 col-lg-6">
-        <div class="card h-100">
+        <div class="card h-100 hoverable">
             <div class="card-body">
                 <h6 class="fw-bold mb-3"><i class="fas fa-bolt text-brand me-1"></i> Quick Actions</h6>
                 <div class="d-flex flex-wrap gap-2">
@@ -80,7 +80,7 @@
         </div>
     </div>
     <div class="col-12 col-lg-6">
-        <div class="card h-100">
+        <div class="card h-100 hoverable">
             <div class="card-body">
                 <h6 class="fw-bold mb-3"><i class="fas fa-circle-info text-brand me-1"></i> About</h6>
                 <p class="text-muted mb-0">

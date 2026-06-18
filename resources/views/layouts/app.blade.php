@@ -137,8 +137,178 @@
             background-color: var(--magerwa-green-light);
             color: var(--magerwa-green);
         }
-        .card { border-radius: .6rem; }
+        .card {
+            border-radius: .6rem;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
         .table thead th { white-space: nowrap; }
+
+        /* =========================================================
+         |  MICRO-INTERACTIONS & ENHANCEMENTS
+         |=========================================================*/
+
+        /* --- Global smoothing --- */
+        a, .btn, .nav-link, .form-control, .form-select, .input-group-text, .badge {
+            transition: all .2s ease;
+        }
+
+        /* --- Page entrance animation --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up { animation: fadeInUp .5s cubic-bezier(.2,.7,.3,1) both; }
+        .main-content > * { animation: fadeInUp .45s ease both; }
+
+        /* --- Buttons: lift + press + ripple --- */
+        .btn {
+            position: relative;
+            overflow: hidden;
+            letter-spacing: .2px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.14); }
+        .btn:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+        .btn-success:hover { box-shadow: 0 6px 16px rgba(26,107,60,.35); }
+        .btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            background: rgba(255,255,255,.5);
+            animation: ripple .6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple { to { transform: scale(3.2); opacity: 0; } }
+
+        /* --- Icon buttons in tables: pop on hover --- */
+        td .btn-sm:hover { transform: translateY(-2px) scale(1.08); }
+
+        /* --- Cards: hover lift --- */
+        .stat-card:hover,
+        .card.hoverable:hover { transform: translateY(-5px); box-shadow: 0 12px 26px rgba(0,0,0,.12); }
+
+        /* --- Stat card icon: bounce + colour fill on hover --- */
+        .stat-card .icon-box { transition: transform .25s ease, background-color .25s ease, color .25s ease; }
+        .stat-card:hover .icon-box {
+            background-color: var(--magerwa-green);
+            color: #fff;
+            transform: rotate(-8deg) scale(1.12);
+        }
+
+        /* --- Sidebar links: sliding indicator --- */
+        .sidebar .nav-link {
+            position: relative;
+            transition: background-color .2s ease, color .2s ease, padding-left .2s ease;
+        }
+        .sidebar .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            width: 4px; height: 0;
+            background: var(--magerwa-green);
+            transform: translateY(-50%);
+            transition: height .25s ease;
+            border-radius: 0 3px 3px 0;
+        }
+        .sidebar .nav-link:hover { padding-left: 1.6rem; }
+        .sidebar .nav-link:hover::before { height: 60%; }
+        .sidebar .nav-link.active::before { height: 100%; background: #fff; }
+        .sidebar .nav-link i { transition: transform .2s ease; }
+        .sidebar .nav-link:hover i { transform: scale(1.2); }
+
+        /* --- Navbar brand pulse --- */
+        .top-navbar .navbar-brand:hover i { animation: wiggle .4s ease; }
+        @keyframes wiggle {
+            0%,100% { transform: rotate(0); }
+            30% { transform: rotate(-8deg); }
+            60% { transform: rotate(6deg); }
+        }
+
+        /* --- Inputs: focus glow + lift --- */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--magerwa-green);
+            box-shadow: 0 0 0 .2rem rgba(26,107,60,.18);
+        }
+        .input-group-animated:focus-within .input-group-text {
+            background-color: var(--magerwa-green);
+            color: #fff;
+            border-color: var(--magerwa-green);
+        }
+        .input-group-animated:focus-within { transform: translateY(-1px); }
+
+        /* --- Table rows: hover slide + tint --- */
+        .table-hover tbody tr { transition: background-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+        .table-hover tbody tr:hover {
+            background-color: var(--magerwa-green-light) !important;
+            transform: scale(1.004);
+            box-shadow: inset 3px 0 0 var(--magerwa-green);
+        }
+
+        /* --- Badges --- */
+        .badge.bg-brand:hover { transform: scale(1.08); }
+
+        /* --- Flash messages slide in --- */
+        .alert { animation: slideDown .4s ease both; border-radius: .55rem; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Links underline grow --- */
+        .link-underline-hover { position: relative; }
+        .link-underline-hover::after {
+            content: '';
+            position: absolute; left: 0; bottom: -2px;
+            width: 0; height: 2px; background: var(--magerwa-green);
+            transition: width .25s ease;
+        }
+        .link-underline-hover:hover::after { width: 100%; }
+
+        /* --- Auth screen extras --- */
+        .auth-wrapper {
+            background:
+                radial-gradient(1200px 600px at 10% -10%, rgba(26,107,60,.12), transparent 60%),
+                radial-gradient(1000px 500px at 110% 110%, rgba(26,107,60,.10), transparent 55%),
+                #eef3f0;
+        }
+        .brand-badge {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--magerwa-green), #2e9c5c);
+            box-shadow: 0 8px 20px rgba(26,107,60,.35);
+            animation: floaty 3.5s ease-in-out infinite;
+        }
+        @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+        /* Shake (login error) */
+        @keyframes shake {
+            10%,90% { transform: translateX(-1px); }
+            20%,80% { transform: translateX(2px); }
+            30%,50%,70% { transform: translateX(-5px); }
+            40%,60% { transform: translateX(5px); }
+        }
+        .shake { animation: shake .5s cubic-bezier(.36,.07,.19,.97) both; }
+
+        /* Success pop (login success) */
+        @keyframes successPop {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.03); box-shadow: 0 14px 36px rgba(26,107,60,.30); }
+            100% { transform: scale(1); }
+        }
+        .success-pop { animation: successPop .55s ease both; }
+
+        /* Logout button hover */
+        .top-navbar .btn-light:hover { transform: translateY(-2px); }
+
+        /* Count-up numbers */
+        .stat-number { font-variant-numeric: tabular-nums; }
+
+        /* Modal entrance */
+        .modal.fade .modal-dialog { transform: scale(.92) translateY(10px); transition: transform .25s ease; }
+        .modal.show .modal-dialog { transform: scale(1) translateY(0); }
+
+        /* Respect reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -242,6 +412,41 @@
                 alert.close();
             });
         }, 4000);
+
+        // Material-style ripple on every button
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn');
+            if (!btn) return;
+            const circle = document.createElement('span');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            circle.className = 'ripple';
+            circle.style.width = circle.style.height = size + 'px';
+            circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            circle.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+            btn.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
+        });
+
+        // Animated count-up for elements with [data-count]
+        (function () {
+            const els = document.querySelectorAll('[data-count]');
+            if (!els.length) return;
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            els.forEach(function (el) {
+                const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+                if (reduce || target === 0) { el.textContent = target.toLocaleString(); return; }
+                const duration = 900;
+                const start = performance.now();
+                function tick(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+                    el.textContent = Math.round(eased * target).toLocaleString();
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            });
+        })();
     </script>
     @stack('scripts')
 </body>
