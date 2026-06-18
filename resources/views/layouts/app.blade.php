@@ -452,6 +452,24 @@
         .strength-bar span { display: block; height: 100%; width: 0; border-radius: 99px; transition: width .35s var(--ease), background-color .35s var(--ease); }
         .strength-label, .match-hint { font-size: .78rem; font-weight: 600; display: inline-block; margin-top: .3rem; transition: color var(--t) var(--ease); }
 
+        /* =========================================================
+         |  PRELOADER
+         |=========================================================*/
+        #preloader {
+            position: fixed; inset: 0; z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg);
+            transition: opacity .4s var(--ease), visibility .4s var(--ease);
+        }
+        #preloader.is-hidden { opacity: 0; visibility: hidden; }
+        #preloader .preloader-spinner {
+            width: 52px; height: 52px; border-radius: 50%;
+            border: 4px solid var(--brand-100);
+            border-top-color: var(--brand-600);
+            animation: preloader-spin .8s linear infinite;
+        }
+        @keyframes preloader-spin { to { transform: rotate(360deg); } }
+
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -459,6 +477,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Spinner preloader (shows for 3 seconds on page load) -->
+    <div id="preloader" aria-hidden="true">
+        <div class="preloader-spinner" role="status"><span class="visually-hidden">Loading…</span></div>
+    </div>
 
     @auth
     <!-- Top navbar -->
@@ -544,6 +567,13 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Hide the spinner preloader after 3 seconds
+        (function () {
+            const preloader = document.getElementById('preloader');
+            if (!preloader) return;
+            setTimeout(function () { preloader.classList.add('is-hidden'); }, 3000);
+        })();
+
         // Sidebar toggle (mobile / tablet)
         (function () {
             const toggle = document.getElementById('sidebarToggle');
