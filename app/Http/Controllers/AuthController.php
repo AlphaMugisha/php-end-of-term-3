@@ -45,6 +45,15 @@ class AuthController extends Controller
 
         Auth::login($admin);
         $request->session()->regenerate();
+        $request->session()->flash('success', 'Welcome to Magerwa VTMS, ' . $admin->name . '!');
+
+        // AJAX / fetch request — return the redirect target as JSON.
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message'  => 'Account created successfully.',
+                'redirect' => route('dashboard'),
+            ], 201);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Welcome to Magerwa VTMS, ' . $admin->name . '!');
     }
